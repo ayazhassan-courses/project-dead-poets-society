@@ -1,3 +1,4 @@
+'''
 def enqueue(lst, item, front, rear, queuesize):
     print(front)
     if (rear+1) % queuesize == front:
@@ -67,7 +68,7 @@ for i in range(queuesize):
 for i in range(len(plaintext)):
     enqueue(queue, plaintext[i], front, rear, queuesize)
 
-print(display(queue, front, rear, queuesize))
+#print(display(queue, front, rear, queuesize))
 
 
 
@@ -97,5 +98,31 @@ def encryption(plaintext):
     return declist
 
 
-print(encryption(plaintext))
+#print(encryption(plaintext))
+'''
+#implementation 2
 
+database = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+def encrypt(text):
+    key = int(input("Key: "))
+    output = ''
+    for i in range(len(text)):
+        c = text[i]
+        position = database.find(c)
+        position_e = (position + key) % 54
+        output = output + database[position_e]
+    return output
+
+#print(encrypt('applesarenice'))
+
+def decrypt(text):
+    key = int(input("Key: "))
+    output = ''
+    for i in range(len(text)):
+        c = text[i]
+        position = database.find(c)
+        position_e = (position - key) % 54
+        output = output + database[position_e]
+    return output
+#print(decrypt('dssohvduhqlfh'))
