@@ -1,8 +1,29 @@
-plaintext = intput()
+def enqueue(lst, item):
+    lst.append(item)
+
+
+def dequeue(lst):
+    return lst.pop(0)
+
+
+def front(lst):
+    return lst[0]
+
+
+def rear(lst):
+    return lst[-1]
+
+
+def is_empty(lst):
+    if len(lst) == 0:
+        return True
+    else:
+        return False
+
+
+plaintext = input()
 
 queuesize = int(input())
-
-
 
 
 
