@@ -1,76 +1,77 @@
-'''
-def enqueue(lst, item, front, rear, queuesize):
-    print(front)
-    if (rear+1) % queuesize == front:
-        print('Error: Queue is full')
-    elif front == -1:
-        front = 0
-        rear = 0
-        lst[rear]=item
-    else:
-        rear = (rear + 1) % queuesize
-        print(rear)
-        lst[rear]=item
-    print(front)
-
-
-def dequeue(lst, front, rear, queuesize):
-    if front == -1:
-        print("Error: Queue is empty")
-    elif front == rear:
-        temp = lst[front]
-        front = -1
-        rear = -1
-        return temp
-    else:
-        temp = lst[front]
-        front = (front + 1) % queuesize
-        return temp
-
-
-def front(lst):
-    return lst[front]
-
-
-def rear(lst):
-    return lst[rear]
-
-
-def display(lst, front, rear, queuesize):
-    if front == -1:
-        print("Error: Queue is empty")
-    elif rear >= front:
-        print("Elements in the circular queue are:", end = " ")
-        for i in range(front, rear + 1):
-            print(lst[i], end = " ")
-        print()
-    else:
-        print ("Elements in the circular queue are:", end = " ")
-        for i in range(front, queuesize):
-            print(lst[i], end = " ")
-        for i in range(0, rear + 1):
-            print(lst[i], end = " ")
-        print()
-
-    if ((rear + 1) % queuesize == front):
-        print("Error: Queue is Full")
+# def enqueue(lst, item, front, rear, queuesize):
+#     print(front)
+#     if (rear+1) % queuesize == front:
+#         print('Error: Queue is full')
+#     elif front == -1:
+#         front = 0
+#         rear = 0
+#         lst[rear]=item
+#     else:
+#         rear = (rear + 1) % queuesize
+#         print(rear)
+#         lst[rear]=item
+#     print(front)
 #
 #
+# def dequeue(lst, front, rear, queuesize):
+#     if front == -1:
+#         print("Error: Queue is empty")
+#     elif front == rear:
+#         temp = lst[front]
+#         front = -1
+#         rear = -1
+#         return temp
+#     else:
+#         temp = lst[front]
+#         front = (front + 1) % queuesize
+#         return temp
+#
+#
+# def frontt(lst):
+#     return lst[front]
+#
+#
+# def rear(lst):
+#     return lst[rear]
+#
+#
+# def display(lst, front, rear, queuesize):
+#     if front == -1:
+#         print("Error: Queue is empty")
+#     elif rear >= front:
+#         print("Elements in the circular queue are:", end = " ")
+#         for i in range(front, rear + 1):
+#             print(lst[i], end = " ")
+#         print()
+#     else:
+#         print ("Elements in the circular queue are:", end = " ")
+#         for i in range(front, queuesize):
+#             print(lst[i], end = " ")
+#         for i in range(0, rear + 1):
+#             print(lst[i], end = " ")
+#         print()
+#
+#     if ((rear + 1) % queuesize == front):
+#         print("Error: Queue is Full")
+#
+#
+# plaintext = input()
+# queuesize = int(input())
+# front = -1
+# rear = -1
+# queue = []
+#
+# for i in range(queuesize):
+#     queue.append([])
+#
+# for i in range(len(plaintext)):
+#     enqueue(queue, plaintext[i], front, rear, queuesize)
+#
+# print(queue)
+#
+
+
 plaintext = input()
-queuesize = int(input())
-front = -1
-rear = -1
-queue = []
-
-for i in range(queuesize):
-    queue.append([])
-
-for i in range(len(plaintext)):
-    enqueue(queue, plaintext[i], front, rear, queuesize)
-
-#print(display(queue, front, rear, queuesize))
-
-
 
 def encryption(plaintext):
     cyphertext = ''
@@ -93,36 +94,55 @@ def encryption(plaintext):
         declist.append(decimal)
 
     #declist is the decimal list now the decimals need to be put in a fibonacci series
+    sum = 0
+    fibonacci = [21, 13, 8, 5, 3, 2, 1, 1]
+    binary = [0, 0, 0, 0, 0, 0, 0, 0]
+    binlist = []
+    for i in declist:
+        number = i
+        for j in range(len(fibonacci)):
+            if fibonacci[j]<=number and sum <= number:
+                sum += fibonacci[j]
+                binary[j]=1
+                number -= fibonacci[j]
+    return binary
 
+def decryption(binary):
+    dec = 0
+    declist = []
+    fibonacci = [21, 13, 8, 5, 3, 2, 1, 1]
+    for i in binary:
+        idk = str(i)
+        for j in range(len(idk)):
+            if idk[j] == '1':
+                dec += fibonacci[j]
+        declist.append(dec)
 
-    return declist
+    for i in declist:
+        binlist.append(bin(ord(i))[0]+bin(ord(i))[2:])
 
+    # XOR step with Keywords
 
-#print(encryption(plaintext))
-'''
-#implementation 2
+    xoroutput = []
 
-database = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    xoroutput = binlist
+    final = []
 
-def encrypt(text):
-    key = int(input("Key: "))
-    output = ''
-    for i in range(len(text)):
-        c = text[i]
-        position = database.find(c)
-        position_e = (position + key) % 54
-        output = output + database[position_e]
-    return output
+    for i in xoroutput:
+        decimal = 0
+        for j in range((len(i))):
+            last = i[j]
+            f = len(i) - 1 - j
+            if last == '1':
+                decimal = decimal + 2 ** f
+        declist.append(decimal)
 
-#print(encrypt('applesarenice'))
+    for i in decllist:
+        final.append(chr(i))
 
-def decrypt(text):
-    key = int(input("Key: "))
-    output = ''
-    for i in range(len(text)):
-        c = text[i]
-        position = database.find(c)
-        position_e = (position - key) % 54
-        output = output + database[position_e]
-    return output
-#print(decrypt('dssohvduhqlfh'))
+    return final
+#
+print(encryption(plaintext))
+print(plaintext)
+print(decryption(binary))
+
