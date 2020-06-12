@@ -1,33 +1,32 @@
 def enqueue(lst, item, front, rear, queuesize):
     # there is an issue with scope here, i change front to 0 but it reverts to -1 when repeating the function to
     # enqueue more items
-    print(front)
     if (rear+1) % queuesize == front:
         print('Error: Queue is full')
     elif front == -1:
         front = 0
         rear = 0
-        lst[rear]=item
+        lst[rear][0]=item
     else:
         rear = (rear + 1) % queuesize # we use mod because it is circular and not linear so if size is 5 and we move the
                                         # rear pointer to 6 it should go to the 'beginning'
-        print(rear)
-        lst[rear]=item
-    print(front)
+        lst[rear][0]=item
     # there are 3 cases here, first when the circular queue is full, second to initialise, third to normally enqueue
+    return front, rear
 
 def dequeue(lst, front, rear, queuesize):
     if front == -1:
         print("Error: Queue is empty")
     elif front == rear:
-        temp = lst[front]
+        temp = lst[front][0]
         front = -1
         rear = -1
         return temp
     else:
-        temp = lst[front]
+        temp = lst[front][0]
         front = (front + 1) % queuesize
         return temp
+    return front, rear
     # same as enqueue
 
 
@@ -60,24 +59,31 @@ def display(lst, front, rear, queuesize):
     # to display the elements in the queue
 ''''''
 
+plaintext = input()
+queuesize = int(input())
+front = -1
+rear = -1
+queue = []
+letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+if queuesize > 26:
+    x = queuesize-26
+for i in range(x):
+    letters.append('x')
 
-# queuesize = int(input())
-# front = -1
-# rear = -1
-# queue = []
-#
-# for i in range(queuesize):
-#     queue.append([])
 
-# for i in range(len(plaintext)):
-#     enqueue(queue, plaintext[i], front, rear, queuesize)
+for i in range(queuesize):
+    queue.append(['', letters[i]])
 
-# print(queue)
+for i in range(len(plaintext)):
+    front, rear = enqueue(queue, plaintext[i], front, rear, queuesize)
+
+
+print(queue)
 
 ''''''
 
 
-plaintext = input()
+
 
 def encryption(plaintext):
     cyphertext = ''
@@ -124,44 +130,44 @@ def encryption(plaintext):
 
 ''''''
 #decryption is the same just the opposite way around
-
-def decryption(binary):
-
-    dec = 0
-    declist = []
-    fibonacci = [21, 13, 8, 5, 3, 2, 1, 1]
-    for i in binary:
-        idk = str(i)
-        for j in range(len(idk)):
-            if idk[j] == '1':
-                dec += fibonacci[j]
-        declist.append(dec)
-
-    for i in declist:
-        binlist.append(bin(ord(i))[0]+bin(ord(i))[2:])
-
-    # XOR step with Keywords that has not been done yet
-
-    xoroutput = []
-
-    xoroutput = binlist
-    final = []
-
-    for i in xoroutput:
-        decimal = 0
-        for j in range((len(i))):
-            last = i[j]
-            f = len(i) - 1 - j
-            if last == '1':
-                decimal = decimal + 2 ** f
-        declist.append(decimal)
-
-    for i in decllist:
-        final.append(chr(i))
-
-    return final
-
+#
+# def decryption(binary):
+#
+#     dec = 0
+#     declist = []
+#     fibonacci = [21, 13, 8, 5, 3, 2, 1, 1]
+#     for i in binary:
+#         idk = str(i)
+#         for j in range(len(idk)):
+#             if idk[j] == '1':
+#                 dec += fibonacci[j]
+#         declist.append(dec)
+#
+#     for i in declist:
+#         binlist.append(bin(ord(i))[0]+bin(ord(i))[2:])
+#
+#     # XOR step with Keywords that has not been done yet
+#
+#     xoroutput = []
+#
+#     xoroutput = binlist
+#     final = []
+#
+#     for i in xoroutput:
+#         decimal = 0
+#         for j in range((len(i))):
+#             last = i[j]
+#             f = len(i) - 1 - j
+#             if last == '1':
+#                 decimal = decimal + 2 ** f
+#         declist.append
+#
+#     for i in decllist:(decimal)
+#         final.append(chr(i))
+#
+#     return final
+#
 print(encryption(plaintext))
-
-# print(decryption(binary))
-
+#
+# # print(decryption(binary))
+#
