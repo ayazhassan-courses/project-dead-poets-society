@@ -1,3 +1,40 @@
+def test_func(testtext):
+    print(testtext)
+    #to output the decrypted/encrypted text, add that next line and set it equal to whatever the respective function outputs
+    #instead of 'test output'
+    
+    outputbox['text'] = 'test output'
+
+import tkinter as gui
+
+root = gui.Tk()
+
+
+canvas = gui.Canvas(root, height = 600, width = 800)
+canvas.pack()
+
+frame = gui.Frame(root, bg= '#aed6f1', bd=5)
+frame.place( relx = 0.5, rely = 0.1, relwidth= 0.75, relheight = 0.1, anchor='n')
+
+EncryptButton = gui.Button(frame, text= "Encrypt Text", command=lambda: test_func(textbox.get()))
+EncryptButton.place(relx = 0.7, relwidth =0.3, relheight= 0.5 )
+#for both encryption and decryption buttons just replace the test func with the respective functions
+
+DecryptButton = gui.Button(frame, text= "Decrypt Text", command=lambda: test_func(textbox.get()))
+DecryptButton.place(relx = 0.7, rely =0.55 ,relwidth =0.3, relheight= 0.5 )
+
+textbox = gui.Entry(frame)
+textbox.place(relx = 0, rely = 0, relwidth= 0.65, relheight = 1)
+
+result = gui.Frame(root,bg= '#aed6f1', bd=10)
+result.place(relx=0.5, rely= 0.25, relwidth =0.75, relheight = 0.6, anchor='n')
+
+outputbox = gui.Label(result, anchor="nw", justify='left', bd=4)
+outputbox.place(relwidth=1 ,relheight= 1)
+
+root.mainloop()
+
+
 def enqueue(lst, item, front, rear, queuesize):
     # there is an issue with scope here, i change front to 0 but it reverts to -1 when repeating the function to
     # enqueue more items
