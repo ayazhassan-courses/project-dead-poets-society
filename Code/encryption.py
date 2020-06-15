@@ -64,9 +64,11 @@ queuesize = int(input())
 front = -1
 rear = -1
 queue = []
+keyasci = []
 letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 if queuesize > 26:
     x = queuesize-26
+x = queuesize
 for i in range(x):
     letters.append('x')
 
@@ -77,16 +79,15 @@ for i in range(queuesize):
 for i in range(len(plaintext)):
     front, rear = enqueue(queue, plaintext[i], front, rear, queuesize)
 
+keywords = [i[1] for i in queue]
+for i in keywords:
+    keyasci.append(bin(ord(i))[0] + bin(ord(i))[2:])
 
-print(queue)
 
 ''''''
 
 
-
-
-def encryption(plaintext):
-    cyphertext = ''
+def encryption(plaintext, queue):
     asci = []
     declist = []
 
@@ -96,25 +97,35 @@ def encryption(plaintext):
 
    # this step is pending but in it we xor the binary with another 8 bit binary code we get from the circular queue
 
+    xored = []
+
+
+    for i in range(len(asci)):
+        a = asci[i]
+        b = keyasci[i]
+        y = int(a, 2) ^ int(b, 2)
+        xored.append(bin(y)[2:].zfill(len(a)))
+
+
     # now theres an 8 bit number thats been xor'd, we will convert it back to decimal
 
-    for i in asci:
+    for i in xored:
         decimal = 0
         for j in range((len(i))):
             last = i[j]
             f = len(i)-1-j
             if last == '1':
                 decimal = decimal + 2**f
-        declist.append(decimal-80) # since we should have had xor'd it, the number would be small enough where every
-                                    # ascii character would be represented in 8 bit but since we havent managed to do
-                                    # that, for now i will manually reduce the value of the decimal so it is not
-                                    # all '11111111'
+        declist.append(decimal)
+
+
 
     #declist is the decimal list now the decimals need to be put in a fibonacci series, i made this without
     # using any theorem, but it works
-    print(declist)
-    fibonacci = [21, 13, 8, 5, 3, 2, 1, 1]
-    binary = ['0'*8 for i in range(len(declist))]
+    # print(declist)
+    # print(queue)
+    fibonacci = [55, 34, 21, 13, 8, 5, 3, 2, 1, 1]
+    binary = ['0'*10 for i in range(len(declist))]
 
     for i in range(len(declist)):
         number = declist[i]
@@ -130,44 +141,50 @@ def encryption(plaintext):
 
 ''''''
 #decryption is the same just the opposite way around
-#
-# def decryption(binary):
-#
-#     dec = 0
-#     declist = []
-#     fibonacci = [21, 13, 8, 5, 3, 2, 1, 1]
-#     for i in binary:
-#         idk = str(i)
-#         for j in range(len(idk)):
-#             if idk[j] == '1':
-#                 dec += fibonacci[j]
-#         declist.append(dec)
-#
-#     for i in declist:
-#         binlist.append(bin(ord(i))[0]+bin(ord(i))[2:])
-#
-#     # XOR step with Keywords that has not been done yet
-#
-#     xoroutput = []
-#
-#     xoroutput = binlist
-#     final = []
-#
-#     for i in xoroutput:
-#         decimal = 0
-#         for j in range((len(i))):
-#             last = i[j]
-#             f = len(i) - 1 - j
-#             if last == '1':
-#                 decimal = decimal + 2 ** f
-#         declist.append
-#
-#     for i in decllist:(decimal)
-#         final.append(chr(i))
-#
-#     return final
-#
-print(encryption(plaintext))
-#
-# # print(decryption(binary))
-#
+
+def decryption(binary, keyasci):
+
+    dec = 0
+    declist = []
+    binlist = []
+    xoroutput = []
+    fibonacci = [55, 34, 21, 13, 8, 5, 3, 2, 1, 1]
+    for i in binary:
+        idk = str(i)
+        for j in range(len(idk)):
+            if idk[j] == '1':
+                dec += fibonacci[j]
+        declist.append(dec)
+
+    for i in declist:
+        binlist.append(bin(i)[0]+bin(i)[2:])
+
+    print(binlist)
+    # XOR step with Keywords that has not been done yet
+    for i in range(len(keyasci)):
+        a = keyasci[i]
+        b = binlist[i]
+        y = int(a, 2) ^ int(b, 2)
+        xoroutput.append(bin(y)[2:].zfill(len(a)))
+
+    temp = []
+    final = []
+    print(xoroutput)
+    for i in xoroutput:
+        decimal = 0
+        for j in range((len(i))):
+            last = i[j]
+            f = len(i) - 1 - j
+            if last == '1':
+                decimal = decimal + 2 ** f
+        temp.append(decimal)
+
+    for i in temp:
+        final.append(chr(i))
+
+    return final
+
+binary = encryption(plaintext, queue)
+
+print(decryption(binary, keyasci))
+
