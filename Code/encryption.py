@@ -144,13 +144,15 @@ def encryption(plaintext, queue):
 
 def decryption(binary, keyasci):
 
-    dec = 0
+
     declist = []
     binlist = []
     xoroutput = []
     fibonacci = [55, 34, 21, 13, 8, 5, 3, 2, 1, 1]
+
     for i in binary:
-        idk = str(i)
+        idk = i
+        dec = 0
         for j in range(len(idk)):
             if idk[j] == '1':
                 dec += fibonacci[j]
@@ -158,8 +160,15 @@ def decryption(binary, keyasci):
 
     for i in declist:
         binlist.append(bin(i)[0]+bin(i)[2:])
+    for i in range(len(binlist)):
+        if len(binlist[i])!=len(keyasci[i]):
+            while len(binlist[i])!=len(keyasci[i]):
+                if len(binlist[i])>len(keyasci[i]):
+                    keyasci[i]='0'+keyasci[i]
+                else:
+                    binlist[i]='0'+binlist[i]
 
-    print(binlist)
+
     # XOR step with Keywords that has not been done yet
     for i in range(len(keyasci)):
         a = keyasci[i]
@@ -167,9 +176,10 @@ def decryption(binary, keyasci):
         y = int(a, 2) ^ int(b, 2)
         xoroutput.append(bin(y)[2:].zfill(len(a)))
 
+    
     temp = []
     final = []
-    print(xoroutput)
+
     for i in xoroutput:
         decimal = 0
         for j in range((len(i))):
