@@ -1,6 +1,6 @@
 def test_func(testtext):
     print(testtext)
-    #to output the decrypted/encrypted text, add that next line and set it equal to whatever the respective function outputs
+    #to output the decrypted/encrypted text, add that next line to each function and set it equal to whatever the respective function outputs
     #instead of 'test output'
     
     outputbox['text'] = 'test output'
