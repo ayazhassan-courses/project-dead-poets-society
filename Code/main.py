@@ -21,23 +21,26 @@ def dequeue(lst, front, rear, queuesize):
     if front == -1:
         print("Error: Queue is empty")
     elif front == rear:
-        temp = lst[front][0]
+        lst[front][0]=''
         front = -1
         rear = -1
-        return temp
+
     else:
-        temp = lst[front][0]
+        lst[front][0] = ''
         front = (front + 1) % queuesize
-        return temp
-    # return front, rear
+
+    return front, rear
     # same as enqueue
 
 
 ''''''
+# ok this is all thats important for u i think @shayan
 
-
+# the inputs
 plaintext = input()
 queuesize = int(input())
+
+# this isnt really important for gui but this initialises the queue
 if queuesize<len(plaintext):
     while queuesize<len(plaintext):
         print('The size of the queue has to be bigger than the input')
@@ -57,13 +60,17 @@ for i in range(x):
 for i in range(queuesize):
     queue.append(['', letters[i]])
 
+# the initialisation is done, now its using the input to enqueue in the queue
+
 for i in range(len(plaintext)):
     front, rear = enqueue(queue, plaintext[i], front, rear, queuesize)
-
+# using the queue for encryption
 keywords = [i[1] for i in queue]
 for i in keywords:
     keyasci.append(bin(ord(i))[0] + bin(ord(i))[2:])
 
+
+''''''
 binary = encryption(plaintext, keyasci)
 
 word = decryption(binary, keyasci)
@@ -71,9 +78,11 @@ word = decryption(binary, keyasci)
 plaintextoutput = ''
 for i in word:
     plaintextoutput+=i
-print(plaintextoutput)
+
 
 for i in range(len(plaintext)):
-    temp = dequeue(queue, front, rear, queuesize)
-print(queue)
-print(keyasci)
+    front, rear = dequeue(queue, front, rear, queuesize)
+
+# if you want the encrypted output, the variable called binary has it
+# ok finally plaintextoutput is the final answer, which should be the exact same as the input called plaintext
+# the rest of the work dosent matter for gui i think, it all works using the encryption and decryption function
