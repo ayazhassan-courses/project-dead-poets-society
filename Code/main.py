@@ -45,10 +45,6 @@ def take_input(button_pressed): #this is whats called when the buttons are press
     global queuesize 
     plaintext = textbox.get()
     queuesize = int(keybox.get())
-    if button_pressed == 'e': #this is to just decide if we wanna output the encrypted text or the decrypted text
-        outputbox['text'] = binary
-    elif button_pressed == 'd':
-        outputbox['text'] = plaintextoutput
 #the problem is binary and plaintextoutput both get defined at the end so thats the error we have to fix 
 
     
@@ -130,6 +126,11 @@ for i in word:
 
 for i in range(len(plaintext)):
     front, rear = dequeue(queue, front, rear, queuesize)
+
+if button_pressed == 'e': 
+        outputbox['text'] = binary
+elif button_pressed == 'd':
+        outputbox['text'] = plaintextoutput
 
 # if you want the encrypted output, the variable called binary has it
 # ok finally plaintextoutput is the final answer, which should be the exact same as the input called plaintext
