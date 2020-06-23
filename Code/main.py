@@ -44,8 +44,8 @@ while True:
     ''''''
     # ok this is all thats important for u i think @shayan
 
-    def take_input(input):  # this is whats called when the buttons are pressed, it takes the inputs and stores them in those variable
-        button = str(input)
+    def take_input(strng):  # this is whats called when the buttons are pressed, it takes the inputs and stores them in those variable
+        button = str(strng)
         plaintext = textbox.get()
         queuesize = int(keybox.get())
         if queuesize<len(plaintext):
