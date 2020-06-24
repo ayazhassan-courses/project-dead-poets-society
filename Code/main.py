@@ -7,6 +7,7 @@ global button
 plaintext = ''
 queuesize = 0
 button = ''
+# these variables are global so they can be called anywhere, its important for button especially as it is used in gui
 
 while True:
     def enqueue(lst, item, front, rear, queuesize):
@@ -22,7 +23,7 @@ while True:
                                             # rear pointer to 6 it should go to the 'beginning'
             lst[rear][0]=item
         # there are 3 cases here, first when the circular queue is full, second to initialise, third to normally enqueue
-        return front, rear
+        return front, rear # returning is the only way the changes occur outside the function on front and rear for some reason
 
 
     def dequeue(lst, front, rear, queuesize):
@@ -47,11 +48,13 @@ while True:
     def take_input(strng):  # this is whats called when the buttons are pressed, it takes the inputs and stores them in those variable
         button = str(strng)
         plaintext = textbox.get()
-        if button == 'e':
+        if button == 'e': # if the button in the gui that the user pressed is encrypt
             queuesize = int(keybox.get())
+            # now to initialise the queue
             if queuesize<len(plaintext):
                 while queuesize<len(plaintext):
                     print('The size of the queue has to be bigger than the input')
+                    # the queue has to be larger than len of plaintext or else it cant be loaded in queue
                     queuesize = int(input())
             front = -1
             rear = -1
@@ -79,16 +82,19 @@ while True:
 
 
             ''''''
-            binary = encryption(plaintext, keyasci)
+            binary = encryption(plaintext, keyasci) # this is where it actually calls encryption
 
             output = binary
 
             outputbox['text'] = output
 
-        elif button == 'd':
+        elif button == 'd': # decryption process
             plaintext = plaintext.split()
             queuesize = int(keybox.get())
-
+            if queuesize<len(plaintext):
+                while queuesize<len(plaintext):
+                    print('Please confirm the size of the queue.')  # same reason as enqueue
+                    queuesize = int(input())
             front = -1
             rear = -1
             queue = []
@@ -124,7 +130,6 @@ while True:
 
             for i in range(len(plaintext)):
                 front, rear = dequeue(queue, front, rear, queuesize)
-            output = ""
 
             output = plaintextoutput
 
